@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Catalog App
 
-## Getting Started
+![sportify-red](https://github.com/user-attachments/assets/c3791e88-a656-4ba1-9d47-8864623abcee)
 
-First, run the development server:
+This is a product catalog web application built with **Next.js**. The app allows users to view product catalogs, search products, view product details with an image slider, add products to the cart, and filter products by category and variant.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **View All Catalogs**  
+  Displays a complete list of products available in the catalog.
+  
+- **Search Catalog**  
+  Allows users to search for products by name.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Catalog Details with Image Slider**  
+  Users can view product details with a slider to navigate through images.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Cart**  
+  Users can add products to the cart and view the products they've added.
 
-## Learn More
+- **Filter by Category and Variant**  
+  Users can filter products by category and variant.
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js** for building the app.
+- **Context API** for state management.
+- **API** is fetched from [my-json-server.typicode.com](https://my-json-server.typicode.com/), which provides the product data online.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How to Run the Application
 
-## Deploy on Vercel
+1. **Clone this repository:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/dianprasetyoo/catalog-app.git
+   cd catalog-app
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Build the application:**
+
+   ```bash
+   npm run build
+
+3. **Start the application:**
+
+   ```bash
+   npm run dev
+
+## Demo
+
+You can view the live demo of the application at https://catalog-app-amber.vercel.app/.
