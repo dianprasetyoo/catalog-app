@@ -4,7 +4,6 @@ import React from "react";
 import useProducts from "../../../hooks/useProducts";
 import ProductCard from "../../../components/ProductCard";
 import { useCart } from "../../../context/CartContext";
-import CartModal from "@/components/CartModal";
 
 const CatalogPage = () => {
   const { products, loading, error } = useProducts();
@@ -22,7 +21,6 @@ const CatalogPage = () => {
           loading={loading}
         />
       </div>
-      <CartModal />
     </div>
   );
 };
