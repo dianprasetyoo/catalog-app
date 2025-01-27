@@ -1,28 +1,30 @@
-"use client"
+"use client";
+
+import React from "react";
+import useProducts from "../../../hooks/useProducts";
 import ProductCard from "../../../components/ProductCard";
 import { useCart } from "../../../context/CartContext";
-import useProducts from "../../../hooks/useProducts";
+import CartModal from "@/components/CartModal";
 
-const CatalogDetailPage = () => {
+const CatalogPage = () => {
   const { products, loading, error } = useProducts();
   const { addToCart } = useCart();
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (error) return <p>{error}</p>;
 
   return (
-    <div className="catalog-page">
-      <h1>Catalog</h1>
-      <div className="product-list">
+    <div>
+      <h1>Product Catalog</h1>
+      <div>
         <ProductCard
           products={products}
           onAddToCart={addToCart}
           loading={loading}
         />
       </div>
+      <CartModal />
     </div>
   );
 };
 
-export default CatalogDetailPage;
+export default CatalogPage;

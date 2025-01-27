@@ -1,20 +1,42 @@
-// src/app/layout.tsx
-import { CartProvider } from "../context/CartContext";
+"use client";
+import { AppProvider } from "../context/AppProvider";
 import "@/app/globals.css";
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import Header from "@/components/Templates/Header";
+import Footer from "@/components/Templates/Footer";
+import SideNav from "@/components/Templates/SideNav";
+import { usePathname } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 
 config.autoAddCss = false;
 
-export const metadata = { title: "Product Catalog", description: "Next.js App" };
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <div >{children}</div>
-        </CartProvider>
+        <AppProvider>
+          <div className="flex flex-col min-h-screen">
+            <div className="fixed w-full z-50 top-0">
+              <Header />
+            </div>
+            <div className="flex flex-col lg:flex-row flex-1 mt-16">
+              {isHomePage && <SideNav />}
+              <main className="flex-1 container p-4">
+                <ToastContainer />
+                <div>{children}</div>
+              </main>
+            </div>
+            <Footer />
+          </div>
+        </AppProvider>
       </body>
     </html>
   );

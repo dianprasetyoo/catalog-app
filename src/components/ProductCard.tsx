@@ -1,6 +1,7 @@
 import React from "react";
 import { Product } from "../interfaces/product";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 interface ProductCardProps {
   products: Product[];
@@ -22,6 +23,18 @@ const LoadingSkeleton = () => {
 };
 
 const ProductCard = ({ products, onAddToCart, loading }: ProductCardProps) => {
+  const handleAddToCart = (item: Product) => {
+    onAddToCart(item);
+    toast.success("Item added to cart!", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {!products ||
@@ -32,7 +45,10 @@ const ProductCard = ({ products, onAddToCart, loading }: ProductCardProps) => {
           key={index}
           className="bg-gray-200 rounded-lg overflow-hidden cursor-pointer self-end"
         >
-          <Link href={{ pathname: `/catalog/${item.id}` }} className="block">
+          <Link
+            href={{ pathname: `/pages/catalog/${item.id}` }}
+            className="block"
+          >
             <div className="relative">
               <div className="text-white absolute bg-red-500 right-0 p-2 rounded-bl-md">
                 $ {item.price}
@@ -42,7 +58,7 @@ const ProductCard = ({ products, onAddToCart, loading }: ProductCardProps) => {
                 alt={`Card ${index}`}
                 className="w-full h-full object-contain"
               />
-              <div className="p-4 mt-[-72px] bg-opacity-50 bg-black relative z-30">
+              <div className="p-4 mt-[-72px] bg-opacity-50 bg-black relative">
                 <h5 className="text-base font-bold text-white">{item.name}</h5>
                 <p className="text-xs text-white line-clamp-3">
                   variant: {item.variant.color}
@@ -52,20 +68,13 @@ const ProductCard = ({ products, onAddToCart, loading }: ProductCardProps) => {
           </Link>
           <div
             className="flex justify-center bg-red-500 py-3 text-white cursor-pointer z-30"
-            onClick={() => onAddToCart(item)}
+            onClick={() => handleAddToCart(item)}
           >
             Add to Cart
           </div>
         </div>
       ))}
     </div>
-    // <div>
-    //   <img src={product.imageUrl} alt={product.name} />
-    //   <h2>{product.name}</h2>
-    //   <p>{product.description}</p>
-    //   <p>${product.price}</p>
-    //   <button onClick={() => onAddToCart(product)}>Add to Cart</button>
-    // </div>
   );
 };
 

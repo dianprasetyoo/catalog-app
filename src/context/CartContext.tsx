@@ -5,17 +5,20 @@ import { Product } from '../interfaces/product';
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantity?: number) => void;
+  openCart: boolean;
+  setOpenCart: (val: boolean) => void;
+  removeFromCart: (id: number) => void;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: FC<React.PropsWithChildren<object>> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [openCart, setOpenCart] = useState<boolean>(false)
 
-  console.log('test:', cart)
-
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, quantity?: number) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
   
@@ -29,12 +32,20 @@ export const CartProvider: FC<React.PropsWithChildren<object>> = ({ children }) 
       }
   
       // If the product doesn't exist, add it as a new item in the cart
-      return [...prevCart, { ...product, quantity: 1 }];
+      return [...prevCart, { ...product, quantity: quantity ?? 1 }];
     });
   };
 
+  const removeFromCart = (id: number) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, openCart, setOpenCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );

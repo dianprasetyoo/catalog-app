@@ -1,17 +1,15 @@
-/* Tailwind CSS base imports */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Root variables for theming */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Add additional variables for customization */
-  --primary: #2563eb; /* Tailwind's blue-500 */
-  --secondary: #64748b; /* Tailwind's slate-500 */
-  --border-color: #e2e8f0; /* Tailwind's gray-200 */
+  --primary: #2563eb;
+  --secondary: #64748b;
+  --border-color: #e2e8f0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,14 +17,12 @@
     --background: #ffffff;
     --foreground: #ededed;
 
-    /* Adjust additional variables for dark mode */
-    --primary: #3b82f6; /* Slightly brighter blue */
-    --secondary: #94a3b8; /* Slightly lighter slate */
-    --border-color: #334155; /* Tailwind's slate-700 */
+    --primary: #3b82f6;
+    --secondary: #94a3b8;
+    --border-color: #334155;
   }
 }
 
-/* Base styles for the body */
 body {
   color: var(--secondary);
   background-color: var(--background);
@@ -36,7 +32,6 @@ body {
   line-height: 1.5;
 }
 
-/* Optional: General utility styles */
 a {
   color: var(--primary);
   text-decoration: none;
@@ -52,7 +47,7 @@ button {
   color: var(--foreground);
   background-color: var(--primary);
   border: 1px solid var(--border-color);
-  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  border-radius: 0.375rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;

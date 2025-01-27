@@ -11,3 +11,17 @@ interface VarianProduct {
     color: "black" | "yellow" | "red" | "blue",
     type: "t-shirt" | "pants" | "socs" | "belt"
 }
+
+export interface ProductDetail {
+  id?: number;
+  name?: string;
+  type?: string;
+  variants?: VariantDetail[];
+}
+
+interface VariantDetail {
+  productId: number
+  color: "black" | "yellow" | "red" | "blue";
+  imageUrl: string;
+  price?: number;
+}

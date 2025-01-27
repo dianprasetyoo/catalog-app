@@ -11,15 +11,18 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
-import {
-    IoClose
-  } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+import useProducts from "@/hooks/useProducts";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
   const [scrolled, setScrolled] = React.useState(false);
-  const { cart } = useCart();
+  const { cart, setOpenCart } = useCart();
+  const [searchQuery, setSearchQuery] = useState("");
+  const { searchProducts, filterProduct, totalProduct } = useProducts();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -44,18 +47,36 @@ function Header() {
     };
   }, []);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      searchProducts(searchQuery);
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
-    <header className={`w-full transition-colors duration-300  ${scrolled ? "bg-white" : "bg-gray-800"}`}>
+    <header
+      className={`w-full transition-colors duration-300  ${
+        scrolled ? "bg-white" : "bg-gray-800"
+      }`}
+    >
       <div className="border border-b-1 border-gray-400 flex justify-between items-center px-4 py-2">
-        {/* Logo */}
         <Image
           src={scrolled ? Logo : LogoRed}
           alt="sportify"
           width={150}
           height={150}
-          className="object-contain"
+          className="object-contain cursor-pointer"
+          onClick={() => router.push("/")}
         />
-        <FaBars onClick={toggleMenu} size={24} className="lg:hidden"/>
+        <div className="relative">
+          <FaBars onClick={toggleMenu} size={24} className="lg:hidden" />
+          {cart?.length > 0 && (
+            <span className="absolute -top-3 -right-3 lg:hidden bg-red-500 text-white w-5 h-5 flex justify-center items-center rounded-full text-xs">
+              {cart.length}
+            </span>
+          )}
+        </div>
 
         {/* Menu for larger screens */}
         <div className="hidden lg:flex flex-1 justify-between items-center">
@@ -63,13 +84,22 @@ function Header() {
           <div className="flex flex-1 justify-center py-2 px-4">
             <input
               className="w-full px-2 py-1 border rounded-md"
-              placeholder="Search Products ..."
+              placeholder="Search Product Name ..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </div>
 
           {/* Cart */}
           <div className="relative">
-            <FaShoppingCart size={24} />
+            <FaShoppingCart
+              className="cursor-pointer"
+              size={24}
+              onClick={() => {
+                setOpenCart(true);
+              }}
+            />
             {cart?.length > 0 && (
               <span className="absolute -top-3 -right-3 bg-red-500 text-white w-5 h-5 flex justify-center items-center rounded-full text-xs">
                 {cart.length}
@@ -79,20 +109,11 @@ function Header() {
         </div>
       </div>
 
-      {/* Full-screen Mobile Menu (Visible when isMenuOpen is true) */}
       {isMenuOpen && (
         <div className="lg:hidden fixed top-0 left-0 right-0 bottom-0 bg-white z-50 p-4">
-          {/* Close Button */}
           <div className="w-full flex justify-end mb-4">
-          <IoClose onClick={toggleMenu} size={24} className="self-end"/>
+            <IoClose onClick={toggleMenu} size={24} className="self-end" />
           </div>
-          {/* <button
-            onClick={toggleMenu}
-            className="absolute top-4 right-4 text-2xl"
-            aria-label="Close menu"
-          >
-            ✕
-          </button> */}
 
           {/* Search Input */}
           <div className="mb-4">
@@ -104,7 +125,11 @@ function Header() {
 
           {/* Menu Items */}
           <div className="space-y-4">
-            <div className="flex flex-row items-center">
+            <div
+              role="button"
+              className="flex flex-row items-center"
+              onClick={() => setOpenCart(true)}
+            >
               <FaShoppingCart size={14} />
               <div className="ml-2">
                 Cart {cart?.length ? `(${cart.length})` : ""}
@@ -132,17 +157,45 @@ function Header() {
               </a>
               {isDropdownOpen && (
                 <div className="w-full">
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                    T-shirt
+                  <a
+                    onClick={() => {
+                      filterProduct("type", "t-shirt");
+                      setIsDropdownOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    T-shirt ({totalProduct("t-shirt")})
                   </a>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                    Pants
+                  <a
+                    onClick={() => {
+                      filterProduct("type", "pants");
+                      setIsDropdownOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Pants ({totalProduct("pants")})
                   </a>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                    Socks
+                  <a
+                    onClick={() => {
+                      filterProduct("type", "socks");
+                      setIsDropdownOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Socks ({totalProduct("socks")})
                   </a>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                    Belt
+                  <a
+                    onClick={() => {
+                      filterProduct("type", "belt");
+                      setIsDropdownOpen(false);
+                      setIsMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Belt ({totalProduct("belt")})
                   </a>
                 </div>
               )}

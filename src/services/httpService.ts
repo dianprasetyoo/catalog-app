@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://my-json-server.typicode.com/typicode/demo'; // Ganti dengan URL API Anda
+const API_URL = 'https://my-json-server.typicode.com/dianprasetyoo/catalog-api';
 
 export const httpService = {
   get: async (endpoint: string) => {
