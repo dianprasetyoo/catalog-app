@@ -50,8 +50,11 @@ function Header() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      searchProducts(searchQuery);
+      e.preventDefault();
+      router.push("/");
       setIsMenuOpen(false);
+      searchProducts(searchQuery);
+      document.getElementById("search-input")?.focus();
     }
   };
 
@@ -85,11 +88,13 @@ function Header() {
             {/* Search Input */}
             <div className="flex flex-1 justify-center py-2 px-4">
               <input
+                id="search-input"
                 className="w-full px-2 py-1 border rounded-md"
                 placeholder="Search Product Name ..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
+                enterKeyHint="enter"
               />
             </div>
 
@@ -130,7 +135,10 @@ function Header() {
               <div
                 role="button"
                 className="flex flex-row items-center"
-                onClick={() => setOpenCart(true)}
+                onClick={() => {
+                  setOpenCart(true);
+                  setIsMenuOpen(false);
+                }}
               >
                 <FaShoppingCart size={14} />
                 <div className="ml-2">
