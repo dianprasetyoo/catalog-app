@@ -83,15 +83,18 @@ function Header() {
           {/* Menu for larger screens */}
           <div className="hidden lg:flex flex-1 justify-between items-center">
             {/* Search Input */}
-              <form className="flex flex-1 justify-center py-2 px-4" onSubmit={handleSubmit}>
-                <input
-                  id="search-input"
-                  className="w-full px-2 py-1 border rounded-md"
-                  placeholder="Search Product Name ..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </form>
+            <form
+              className="flex flex-1 justify-center py-2 px-4"
+              onSubmit={handleSubmit}
+            >
+              <input
+                id="search-input"
+                className="w-full px-2 py-1 border rounded-md"
+                placeholder="Search Product Name ..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </form>
 
             {/* Cart */}
             <div className="relative">
@@ -143,10 +146,38 @@ function Header() {
               <div className="relative flex flex-row items-center justify-between">
                 <div>Color</div>
                 <div className="grid grid-cols-4 gap-4 px-4 py-2">
-                  <button className="bg-red-500 border-none cursor-pointer hover:bg-red-500" />
-                  <button className="bg-blue-500 border-none cursor-pointer hover:bg-blue-500" />
-                  <button className="bg-yellow-500 border-none cursor-pointer hover:bg-yellow-500" />
-                  <button className="bg-black border-none cursor-pointer hover:bg-black" />
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/");
+                      filterProduct("color", "red");
+                    }}
+                    className="bg-red-500 border-none cursor-pointer hover:bg-red-500"
+                  />
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/");
+                      filterProduct("color", "blue");
+                    }}
+                    className="bg-blue-500 border-none cursor-pointer hover:bg-blue-500"
+                  />
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/");
+                      filterProduct("color", "yellow");
+                    }}
+                    className="bg-yellow-500 border-none cursor-pointer hover:bg-yellow-500"
+                  />
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/");
+                      filterProduct("color", "black");
+                    }}
+                    className="bg-black border-none cursor-pointer hover:bg-black"
+                  />
                 </div>
               </div>
               {/* Filter Dropdown */}
