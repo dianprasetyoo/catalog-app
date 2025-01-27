@@ -48,14 +48,11 @@ function Header() {
     };
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      router.push("/");
-      setIsMenuOpen(false);
-      searchProducts(searchQuery);
-      document.getElementById("search-input")?.focus();
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push("/");
+    setIsMenuOpen(false);
+    searchProducts(searchQuery);
   };
 
   return (
@@ -86,17 +83,15 @@ function Header() {
           {/* Menu for larger screens */}
           <div className="hidden lg:flex flex-1 justify-between items-center">
             {/* Search Input */}
-            <div className="flex flex-1 justify-center py-2 px-4">
-              <input
-                id="search-input"
-                className="w-full px-2 py-1 border rounded-md"
-                placeholder="Search Product Name ..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={handleKeyDown}
-                enterKeyHint="enter"
-              />
-            </div>
+              <form className="flex flex-1 justify-center py-2 px-4" onSubmit={handleSubmit}>
+                <input
+                  id="search-input"
+                  className="w-full px-2 py-1 border rounded-md"
+                  placeholder="Search Product Name ..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </form>
 
             {/* Cart */}
             <div className="relative">
